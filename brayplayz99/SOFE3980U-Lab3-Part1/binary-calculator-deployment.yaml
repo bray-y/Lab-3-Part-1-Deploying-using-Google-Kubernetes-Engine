@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: binary-calculator-deployment
+  labels:
+    app: binary-calculator
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: binary-calculator
+  template:
+    metadata:
+      labels:
+        app: binary-calculator
+    spec:
+      containers:
+        - name: binary-calculator
+          image: gcr.io/optimum-plexus-452621-u5/binary-calculator:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://mysql-service:3306/binarydb"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "root"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "yourpassword"
+
